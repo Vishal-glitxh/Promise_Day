@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promise Day 🤝</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Poppins",sans-serif;
+}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  background:linear-gradient(135deg,#eef2f3,#fdfbfb,#e0eafc);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background 2s ease;
+}
+
+/* NIGHT MODE */
+body.night{
+  background:linear-gradient(135deg,#0f172a,#1e293b,#020617);
+}
+
+/* CARD */
+.card{
+  width:92%;
+  max-width:420px;
+  background:#ffffff;
+  border-radius:26px;
+  padding:26px;
+  text-align:center;
+  box-shadow:0 18px 40px rgba(0,0,0,0.08);
+  animation:fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+.hidden{display:none;}
+
+h1{
+  color:#3a4f7a;
+  margin-bottom:12px;
+}
+
+body.night h1{
+  color:#c7d2fe;
+}
+
+p{
+  color:#5f6f94;
+  font-size:1.05em;
+  line-height:1.6;
+  margin-bottom:20px;
+}
+
+body.night p{
+  color:#cbd5f5;
+}
+
+/* PROMISE PATH */
+.path{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+/* PROMISE CARD */
+.promise{
+  padding:16px;
+  border-radius:18px;
+  background:#f5f7fb;
+  border:2px dashed #cbd5e1;
+  color:#64748b;
+  user-select:none;
+  position:relative;
+  overflow:hidden;
+}
+
+body.night .promise{
+  background:#020617;
+  border-color:#334155;
+  color:#cbd5f5;
+}
+
+.promise.locked{
+  opacity:0.5;
+}
+
+.promise.active{
+  border-color:#6366f1;
+  background:#eef2ff;
+  color:#312e81;
+}
+
+.promise.accepted{
+  background:#ecfeff;
+  border-color:#22d3ee;
+  color:#0f766e;
+  animation:pulse 0.6s ease;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.04);}
+  100%{transform:scale(1);}
+}
+
+/* HOLD BAR */
+.holdBar{
+  position:absolute;
+  left:0;
+  bottom:0;
+  height:4px;
+  width:0%;
+  background:#6366f1;
+}
+
+/* BUTTON */
+button{
+  margin-top:15px;
+  padding:12px 28px;
+  border:none;
+  border-radius:30px;
+  background:#6366f1;
+  color:white;
+  font-size:1em;
+  cursor:pointer;
+  box-shadow:0 6px 16px rgba(99,102,241,0.4);
+}
+
+/* FOOTER NOTE */
+.note{
+  font-size:0.9em;
+  opacity:0.7;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SCREEN 1 -->
+<div class="card" id="s1">
+  <h1>🤝 Happy Promise Day</h1>
+  <p>
+    Promises are not made in moments.<br>
+    They’re kept over time.
+  </p>
+  <button onclick="startJourney()">Begin</button>
+</div>
+
+<!-- SCREEN 2 -->
+<div class="card hidden" id="s2">
+  <h1>📜 The Promise Path</h1>
+  <p>Hold each promise to accept it.</p>
+
+  <div class="path">
+    <div class="promise active" data-index="0">
+      I promise to listen — even when it’s uncomfortable.
+      <div class="holdBar"></div>
+    </div>
+
+    <div class="promise locked" data-index="1">
+      I promise to respect your feelings, always.
+      <div class="holdBar"></div>
+    </div>
+
+    <div class="promise locked" data-index="2">
+      I promise to stay — not just on good days.
+      <div class="holdBar"></div>
+    </div>
+  </div>
+
+  <div class="note">Take your time 🤍</div>
+</div>
+
+<!-- SCREEN 3 -->
+<div class="card hidden" id="s3">
+  <h1>🫶 A Quiet Moment</h1>
+  <p>
+    Promises matter only when they’re felt.<br>
+    Pause. Breathe. Continue when ready.
+  </p>
+  <button onclick="finalPromise()">Continue</button>
+</div>
+
+<!-- SCREEN 4 -->
+<div class="card hidden" id="s4">
+  <h1>🤍 My Promise</h1>
+  <p>
+    I may not be perfect.<br>
+    But I promise effort, honesty,<br>
+    patience, and care — every day.<br><br>
+    This is my promise to <strong id="name">You</strong>.
+  </p>
+</div>
+
+<script>
+/* PERSONALIZE */
+const personName = "Vannilla"; // change if you want
+document.getElementById("name").innerText = personName;
+
+const s1 = document.getElementById("s1");
+const s2 = document.getElementById("s2");
+const s3 = document.getElementById("s3");
+const s4 = document.getElementById("s4");
+
+function startJourney(){
+  s1.classList.add("hidden");
+  s2.classList.remove("hidden");
+}
+
+/* PROMISE LOGIC */
+let holdTimer=null;
+let progress=0;
+let accepted=0;
+
+document.querySelectorAll(".promise").forEach(p=>{
+  const bar=p.querySelector(".holdBar");
+
+  const start=()=>{
+    if(p.classList.contains("locked")) return;
+    progress=0;
+    bar.style.width="0%";
+    holdTimer=setInterval(()=>{
+      progress+=4;
+      bar.style.width=progress+"%";
+      if(progress>=100){
+        clearInterval(holdTimer);
+        accept(p);
+      }
+    },50);
+  };
+
+  const stop=()=>{
+    clearInterval(holdTimer);
+    bar.style.width="0%";
+  };
+
+  p.addEventListener("mousedown",start);
+  p.addEventListener("touchstart",start);
+  p.addEventListener("mouseup",stop);
+  p.addEventListener("mouseleave",stop);
+  p.addEventListener("touchend",stop);
+});
+
+function accept(p){
+  p.classList.remove("active");
+  p.classList.add("accepted");
+  accepted++;
+
+  if(accepted===2){
+    document.body.classList.add("night");
+  }
+
+  const next=document.querySelector(`.promise[data-index="${accepted}"]`);
+  if(next){
+    next.classList.remove("locked");
+    next.classList.add("active");
+  }else{
+    setTimeout(()=>{
+      s2.classList.add("hidden");
+      s3.classList.remove("hidden");
+    },900);
+  }
+}
+
+function finalPromise(){
+  s3.classList.add("hidden");
+  s4.classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
