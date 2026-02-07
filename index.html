@@ -3,283 +3,786 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Promise Day 🤝</title>
+<title>My Promise to You 💝</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:"Poppins",sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-  height:100vh;
-  overflow:hidden;
-  background:linear-gradient(135deg,#eef2f3,#fdfbfb,#e0eafc);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:background 2s ease;
+body {
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f0f8ff, #f5f0ff, #fff0f5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  transition: background 2s ease;
+  position: relative;
+}
+
+/* ANIMATED BACKGROUND ELEMENTS */
+.bg-heart {
+  position: absolute;
+  font-size: 24px;
+  opacity: 0.15;
+  animation: float 20s infinite linear;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh) rotate(0deg); }
+  100% { transform: translateY(-100px) rotate(360deg); }
 }
 
 /* NIGHT MODE */
-body.night{
-  background:linear-gradient(135deg,#0f172a,#1e293b,#020617);
+body.night {
+  background: linear-gradient(135deg, #0c1a2d, #1a1f35, #0f1525);
 }
 
 /* CARD */
-.card{
-  width:92%;
-  max-width:420px;
-  background:#ffffff;
-  border-radius:26px;
-  padding:26px;
-  text-align:center;
-  box-shadow:0 18px 40px rgba(0,0,0,0.08);
-  animation:fadeIn 0.8s ease;
+.card {
+  width: 92%;
+  max-width: 480px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 28px;
+  padding: 32px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.8s ease;
+  position: relative;
+  z-index: 10;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
 }
 
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(to right, #6366f1, #a855f7, #ec4899);
+  border-radius: 28px 28px 0 0;
+  z-index: 11;
 }
 
-.hidden{display:none;}
-
-h1{
-  color:#3a4f7a;
-  margin-bottom:12px;
+body.night .card {
+  background: rgba(15, 23, 42, 0.95);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-body.night h1{
-  color:#c7d2fe;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-p{
-  color:#5f6f94;
-  font-size:1.05em;
-  line-height:1.6;
-  margin-bottom:20px;
+.hidden { 
+  display: none; 
+  animation: fadeOut 0.5s ease;
 }
 
-body.night p{
-  color:#cbd5f5;
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-20px); }
+}
+
+/* HEADINGS */
+h1 {
+  color: #4f46e5;
+  margin-bottom: 16px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.8rem;
+  text-shadow: 2px 2px 4px rgba(79, 70, 229, 0.1);
+}
+
+body.night h1 {
+  color: #c7d2fe;
+  text-shadow: 0 0 10px rgba(199, 210, 254, 0.2);
+}
+
+h2 {
+  color: #6366f1;
+  margin-bottom: 10px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.2rem;
+}
+
+body.night h2 {
+  color: #a5b4fc;
+}
+
+/* PARAGRAPHS */
+p {
+  color: #6b7280;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+body.night p {
+  color: #cbd5f5;
 }
 
 /* PROMISE PATH */
-.path{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
+.path {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 25px 0;
 }
 
 /* PROMISE CARD */
-.promise{
-  padding:16px;
-  border-radius:18px;
-  background:#f5f7fb;
-  border:2px dashed #cbd5e1;
-  color:#64748b;
-  user-select:none;
-  position:relative;
-  overflow:hidden;
+.promise {
+  padding: 22px;
+  border-radius: 20px;
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  color: #475569;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  text-align: left;
+  font-size: 1.05rem;
 }
 
-body.night .promise{
-  background:#020617;
-  border-color:#334155;
-  color:#cbd5f5;
+.promise:hover:not(.locked) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.15);
 }
 
-.promise.locked{
-  opacity:0.5;
+body.night .promise {
+  background: rgba(30, 41, 59, 0.7);
+  border-color: #475569;
+  color: #e2e8f0;
 }
 
-.promise.active{
-  border-color:#6366f1;
-  background:#eef2ff;
-  color:#312e81;
+.promise.locked {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.promise.accepted{
-  background:#ecfeff;
-  border-color:#22d3ee;
-  color:#0f766e;
-  animation:pulse 0.6s ease;
+.promise.active {
+  border-color: #6366f1;
+  background: linear-gradient(135deg, #eef2ff, #f5f3ff);
+  color: #4338ca;
+  box-shadow: 0 6px 15px rgba(99, 102, 241, 0.2);
 }
 
-@keyframes pulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.04);}
-  100%{transform:scale(1);}
+body.night .promise.active {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(124, 58, 237, 0.2));
+  color: #c7d2fe;
+}
+
+.promise.accepted {
+  background: linear-gradient(135deg, #f0f9ff, #ecfeff);
+  border-color: #06b6d4;
+  color: #0e7490;
+  animation: pulse 0.6s ease;
+  transform: scale(1.02);
+}
+
+body.night .promise.accepted {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(8, 145, 178, 0.2));
+  color: #a5f3fc;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1.02); }
+}
+
+/* PROMISE ICON */
+.promise i {
+  margin-right: 12px;
+  font-size: 1.2rem;
+  vertical-align: middle;
 }
 
 /* HOLD BAR */
-.holdBar{
-  position:absolute;
-  left:0;
-  bottom:0;
-  height:4px;
-  width:0%;
-  background:#6366f1;
+.holdBar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 5px;
+  width: 0%;
+  background: linear-gradient(to right, #6366f1, #8b5cf6);
+  border-radius: 0 0 0 20px;
+  transition: width 0.3s ease;
 }
 
-/* BUTTON */
-button{
-  margin-top:15px;
-  padding:12px 28px;
-  border:none;
-  border-radius:30px;
-  background:#6366f1;
-  color:white;
-  font-size:1em;
-  cursor:pointer;
-  box-shadow:0 6px 16px rgba(99,102,241,0.4);
+/* BUTTONS */
+button {
+  margin-top: 20px;
+  padding: 16px 36px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(99, 102, 241, 0.5);
+}
+
+button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+  border-radius: 50px;
 }
 
 /* FOOTER NOTE */
-.note{
-  font-size:0.9em;
-  opacity:0.7;
-  margin-top:10px;
+.note {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  margin-top: 15px;
+  font-style: italic;
+}
+
+/* HEART ANIMATION */
+.heart-animation {
+  position: absolute;
+  font-size: 30px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* PROGRESS INDICATOR */
+.progress-container {
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  margin: 20px 0;
+  overflow: hidden;
+}
+
+body.night .progress-container {
+  background: #334155;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, #6366f1, #8b5cf6, #ec4899);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+/* PERSONAL MESSAGE */
+.personal-message {
+  background: linear-gradient(135deg, #f0f9ff, #fdf4ff);
+  border-radius: 20px;
+  padding: 25px;
+  margin: 25px 0;
+  border-left: 6px solid #6366f1;
+}
+
+body.night .personal-message {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(55, 48, 163, 0.2));
+  border-left-color: #8b5cf6;
+}
+
+/* ROMANTIC QUOTE */
+.romantic-quote {
+  font-style: italic;
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.7);
+  margin: 20px 0;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+body.night .romantic-quote {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+/* FINAL SCREEN SPECIAL EFFECTS */
+.final-hearts {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* RESPONSIVE */
+@media (max-width: 500px) {
+  .card {
+    padding: 24px;
+  }
+  
+  h1 {
+    font-size: 2.3rem;
+  }
+  
+  h2 {
+    font-size: 1.9rem;
+  }
+  
+  .promise {
+    padding: 18px;
+    font-size: 1rem;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- SCREEN 1 -->
+<!-- SCREEN 1 - WELCOME -->
 <div class="card" id="s1">
-  <h1>🤝 Happy Promise Day</h1>
+  <h1>💝 My Promise to You</h1>
   <p>
-    Promises are not made in moments.<br>
-    They’re kept over time.
+    My dearest <span class="highlight">Vannilla</span>,<br>
+    On this Promise Day, I want to give you something more than words.<br>
+    These are vows from my heart.
   </p>
-  <button onclick="startJourney()">Begin</button>
+  
+  <div class="romantic-quote">
+    <i class="fas fa-quote-left"></i>
+    Promises are the whispers of forever, spoken today.
+  </div>
+  
+  <button onclick="startJourney()">
+    <i class="fas fa-heart"></i> Begin Our Promise Journey
+  </button>
+  
+  <p class="note">Hold each promise card to accept it</p>
 </div>
 
-<!-- SCREEN 2 -->
+<!-- SCREEN 2 - PROMISE PATH -->
 <div class="card hidden" id="s2">
-  <h1>📜 The Promise Path</h1>
-  <p>Hold each promise to accept it.</p>
-
+  <h1>📜 Our Promise Path</h1>
+  <p>
+    My love, hold each promise until the bar fills.<br>
+    Each one comes from the deepest part of my heart.
+  </p>
+  
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  
   <div class="path">
     <div class="promise active" data-index="0">
-      I promise to listen — even when it’s uncomfortable.
+      <i class="fas fa-heart"></i>
+      I promise to listen with my whole heart — even when it's uncomfortable.
       <div class="holdBar"></div>
     </div>
 
     <div class="promise locked" data-index="1">
-      I promise to respect your feelings, always.
+      <i class="fas fa-star"></i>
+      I promise to respect your feelings, dreams, and space — always.
       <div class="holdBar"></div>
     </div>
 
     <div class="promise locked" data-index="2">
-      I promise to stay — not just on good days.
+      <i class="fas fa-hand-holding-heart"></i>
+      I promise to stay — not just on sunny days but through every storm.
+      <div class="holdBar"></div>
+    </div>
+    
+    <div class="promise locked" data-index="3">
+      <i class="fas fa-sun"></i>
+      I promise to bring light to your darkness and joy to your sadness.
+      <div class="holdBar"></div>
+    </div>
+    
+    <div class="promise locked" data-index="4">
+      <i class="fas fa-infinity"></i>
+      I promise to love you more with each passing day — endlessly.
       <div class="holdBar"></div>
     </div>
   </div>
-
-  <div class="note">Take your time 🤍</div>
+  
+  <div class="note">
+    <i class="fas fa-clock"></i> Take your time, my love
+  </div>
 </div>
 
-<!-- SCREEN 3 -->
+<!-- SCREEN 3 - REFLECTION -->
 <div class="card hidden" id="s3">
-  <h1>🫶 A Quiet Moment</h1>
-  <p>
-    Promises matter only when they’re felt.<br>
-    Pause. Breathe. Continue when ready.
-  </p>
-  <button onclick="finalPromise()">Continue</button>
+  <h1>🫶 A Quiet Moment Together</h1>
+  
+  <div class="personal-message">
+    <p>
+      My darling Vannilla,<br><br>
+      These promises aren't just words on a screen.<br>
+      They're commitments I make to you with my whole being.
+    </p>
+  </div>
+  
+  <div class="romantic-quote">
+    <i class="fas fa-quote-left"></i>
+    In your eyes, I found my home. In your heart, I found my forever.
+  </div>
+  
+  <p>Breathe. Feel. Continue when you're ready.</p>
+  
+  <button onclick="finalPromise()">
+    <i class="fas fa-gem"></i> Continue to My Final Promise
+  </button>
 </div>
 
-<!-- SCREEN 4 -->
+<!-- SCREEN 4 - FINAL PROMISE -->
 <div class="card hidden" id="s4">
-  <h1>🤍 My Promise</h1>
-  <p>
-    I may not be perfect.<br>
-    But I promise effort, honesty,<br>
-    patience, and care — every day.<br><br>
-    This is my promise to <strong id="name">You</strong>.
-  </p>
+  <h1>💖 My Forever Promise</h1>
+  
+  <div class="personal-message">
+    <p>
+      My dearest <strong id="name">Vannilla</strong>,<br><br>
+      I may not be perfect.<br>
+      But I promise you my:<br><br>
+      
+      <i class="fas fa-check-circle"></i> <strong>Effort</strong> - to always try for us<br>
+      <i class="fas fa-check-circle"></i> <strong>Honesty</strong> - in everything I do<br>
+      <i class="fas fa-check-circle"></i> <strong>Patience</strong> - to understand you always<br>
+      <i class="fas fa-check-circle"></i> <strong>Care</strong> - to cherish you every day<br><br>
+      
+      This is my sacred promise to you, today and always.
+    </p>
+  </div>
+  
+  <div class="romantic-quote">
+    <i class="fas fa-heart"></i>
+    With you, every promise feels like a new beginning.
+  </div>
+  
+  <button onclick="createMemory()">
+    <i class="fas fa-camera"></i> Save This Memory
+  </button>
+  
+  <button onclick="location.reload()" style="background: linear-gradient(135deg, #94a3b8, #64748b); margin-left: 15px;">
+    <i class="fas fa-redo"></i> Experience Again
+  </button>
+  
+  <div class="note">
+    <i class="fas fa-lock"></i> These promises are forever sealed in my heart
+  </div>
+</div>
+
+<!-- SCREEN 5 - SECRET MESSAGE -->
+<div class="card hidden" id="s5">
+  <h1>✨ A Little Secret</h1>
+  
+  <div class="personal-message">
+    <p>
+      Guess what, my love?<br><br>
+      Every one of these promises is already happening.<br>
+      I'm living them every day with you.<br><br>
+      
+      And here's one more secret promise:<br>
+      <strong>I'll keep falling in love with you, over and over again.</strong>
+    </p>
+  </div>
+  
+  <div style="font-size: 80px; margin: 20px 0; color: #ec4899;">
+    💝
+  </div>
+  
+  <p>You're my greatest promise kept.</p>
+  
+  <button onclick="location.reload()">
+    <i class="fas fa-heartbeat"></i> Start Over
+  </button>
 </div>
 
 <script>
-/* PERSONALIZE */
-const personName = "Vannilla"; // change if you want
+// PERSONALIZE - Change to your girlfriend's name
+const personName = "Vannilla";
 document.getElementById("name").innerText = personName;
 
+// SCREENS
 const s1 = document.getElementById("s1");
 const s2 = document.getElementById("s2");
 const s3 = document.getElementById("s3");
 const s4 = document.getElementById("s4");
+const s5 = document.getElementById("s5");
+const progressBar = document.getElementById("progressBar");
 
-function startJourney(){
-  s1.classList.add("hidden");
-  s2.classList.remove("hidden");
+// BACKGROUND HEARTS
+function createBackgroundHearts() {
+  const hearts = ['💖', '💕', '💗', '💓', '💞', '💘', '💝'];
+  
+  for (let i = 0; i < 20; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'bg-heart';
+    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDelay = Math.random() * 15 + 's';
+    heart.style.fontSize = (15 + Math.random() * 25) + 'px';
+    
+    document.body.appendChild(heart);
+  }
 }
 
-/* PROMISE LOGIC */
-let holdTimer=null;
-let progress=0;
-let accepted=0;
+// HEART ANIMATION
+function createHeartAnimation(x, y) {
+  const heart = document.createElement('div');
+  heart.className = 'heart-animation';
+  heart.innerHTML = '💖';
+  heart.style.left = x + 'px';
+  heart.style.top = y + 'px';
+  
+  document.body.appendChild(heart);
+  
+  // Animate
+  setTimeout(() => {
+    heart.style.transition = 'all 1s ease';
+    heart.style.opacity = '1';
+    heart.style.transform = 'translateY(-100px) scale(1.5)';
+  }, 10);
+  
+  // Remove after animation
+  setTimeout(() => {
+    heart.remove();
+  }, 1100);
+}
 
-document.querySelectorAll(".promise").forEach(p=>{
-  const bar=p.querySelector(".holdBar");
+// START JOURNEY
+function startJourney() {
+  s1.classList.add('hidden');
+  setTimeout(() => {
+    s2.classList.remove('hidden');
+    updateProgressBar();
+  }, 500);
+  
+  // Create initial hearts
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      createHeartAnimation(
+        Math.random() * window.innerWidth,
+        Math.random() * window.innerHeight
+      );
+    }, i * 200);
+  }
+}
 
-  const start=()=>{
-    if(p.classList.contains("locked")) return;
-    progress=0;
-    bar.style.width="0%";
-    holdTimer=setInterval(()=>{
-      progress+=4;
-      bar.style.width=progress+"%";
-      if(progress>=100){
-        clearInterval(holdTimer);
-        accept(p);
+// PROMISE LOGIC
+let holdTimer = null;
+let progress = 0;
+let accepted = 0;
+const totalPromises = 5;
+
+// UPDATE PROGRESS BAR
+function updateProgressBar() {
+  const percentage = (accepted / totalPromises) * 100;
+  progressBar.style.width = percentage + '%';
+  
+  // Change to night mode after 2 promises
+  if (accepted === 2) {
+    document.body.classList.add('night');
+  }
+}
+
+// PROMISE INTERACTION
+document.querySelectorAll('.promise').forEach(p => {
+  const bar = p.querySelector('.holdBar');
+  let isHolding = false;
+  
+  const startHold = (e) => {
+    if (p.classList.contains('locked') || p.classList.contains('accepted')) return;
+    
+    // Get position for heart animation
+    let x, y;
+    if (e.type.includes('touch')) {
+      x = e.touches[0].clientX;
+      y = e.touches[0].clientY;
+    } else {
+      x = e.clientX;
+      y = e.clientY;
+    }
+    
+    // Create heart at hold start
+    createHeartAnimation(x, y);
+    
+    isHolding = true;
+    progress = 0;
+    bar.style.width = '0%';
+    
+    holdTimer = setInterval(() => {
+      progress += 3;
+      bar.style.width = progress + '%';
+      
+      // Create hearts during hold
+      if (progress % 20 === 0) {
+        createHeartAnimation(
+          x + (Math.random() * 100 - 50),
+          y + (Math.random() * 100 - 50)
+        );
       }
-    },50);
+      
+      if (progress >= 100) {
+        clearInterval(holdTimer);
+        acceptPromise(p);
+      }
+    }, 40);
   };
-
-  const stop=()=>{
+  
+  const stopHold = () => {
+    if (!isHolding) return;
+    
     clearInterval(holdTimer);
-    bar.style.width="0%";
+    bar.style.width = '0%';
+    isHolding = false;
   };
-
-  p.addEventListener("mousedown",start);
-  p.addEventListener("touchstart",start);
-  p.addEventListener("mouseup",stop);
-  p.addEventListener("mouseleave",stop);
-  p.addEventListener("touchend",stop);
+  
+  // Mouse events
+  p.addEventListener('mousedown', startHold);
+  p.addEventListener('mouseup', stopHold);
+  p.addEventListener('mouseleave', stopHold);
+  
+  // Touch events
+  p.addEventListener('touchstart', startHold);
+  p.addEventListener('touchend', stopHold);
+  p.addEventListener('touchcancel', stopHold);
 });
 
-function accept(p){
-  p.classList.remove("active");
-  p.classList.add("accepted");
+// ACCEPT PROMISE
+function acceptPromise(p) {
+  p.classList.remove('active');
+  p.classList.add('accepted');
   accepted++;
-
-  if(accepted===2){
-    document.body.classList.add("night");
+  
+  updateProgressBar();
+  
+  // Create celebration hearts
+  for (let i = 0; i < 3; i++) {
+    setTimeout(() => {
+      createHeartAnimation(
+        Math.random() * window.innerWidth,
+        Math.random() * window.innerHeight
+      );
+    }, i * 200);
   }
-
-  const next=document.querySelector(`.promise[data-index="${accepted}"]`);
-  if(next){
-    next.classList.remove("locked");
-    next.classList.add("active");
-  }else{
-    setTimeout(()=>{
-      s2.classList.add("hidden");
-      s3.classList.remove("hidden");
-    },900);
+  
+  // Unlock next promise
+  const next = document.querySelector(`.promise[data-index="${accepted}"]`);
+  if (next) {
+    setTimeout(() => {
+      next.classList.remove('locked');
+      next.classList.add('active');
+    }, 300);
+  } else {
+    // All promises accepted
+    setTimeout(() => {
+      s2.classList.add('hidden');
+      s3.classList.remove('hidden');
+    }, 1200);
   }
 }
 
-function finalPromise(){
-  s3.classList.add("hidden");
-  s4.classList.remove("hidden");
+// FINAL PROMISE
+function finalPromise() {
+  s3.classList.add('hidden');
+  setTimeout(() => {
+    s4.classList.remove('hidden');
+    
+    // Create final hearts celebration
+    for (let i = 0; i < 15; i++) {
+      setTimeout(() => {
+        createHeartAnimation(
+          Math.random() * window.innerWidth,
+          Math.random() * window.innerHeight
+        );
+      }, i * 150);
+    }
+  }, 500);
 }
+
+// CREATE MEMORY FUNCTION
+function createMemory() {
+  // Create a sweet alert effect
+  const memoryMsg = document.createElement('div');
+  memoryMsg.innerHTML = `
+    <div style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:100; display:flex; align-items:center; justify-content:center;">
+      <div style="background:white; padding:30px; border-radius:20px; text-align:center; max-width:400px; box-shadow:0 10px 30px rgba(0,0,0,0.3);">
+        <h2 style="color:#6366f1; margin-bottom:15px;">💾 Memory Saved</h2>
+        <p>This moment has been saved in our story forever, my love.</p>
+        <p style="margin:20px 0; font-size:50px;">💝</p>
+        <button onclick="this.parentElement.parentElement.remove(); location.reload();" style="padding:10px 25px; background:#6366f1; color:white; border:none; border-radius:25px; cursor:pointer;">
+          Close
+        </button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(memoryMsg);
+  
+  // After 3 seconds, show secret message
+  setTimeout(() => {
+    if (memoryMsg.parentNode) {
+      memoryMsg.parentNode.removeChild(memoryMsg);
+    }
+    
+    s4.classList.add('hidden');
+    setTimeout(() => {
+      s5.classList.remove('hidden');
+    }, 500);
+  }, 3000);
+}
+
+// INITIALIZE
+window.onload = function() {
+  createBackgroundHearts();
+  
+  // Add click sound effect for promises
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.promise') || e.target.closest('button')) {
+      // You could add a sound here if you want
+      // new Audio('click-sound.mp3').play();
+    }
+  });
+  
+  // Add romantic title change
+  let titleChangeCount = 0;
+  const originalTitle = document.title;
+  const romanticTitles = [
+    "💖 My Promise to You",
+    "For My Vannilla 💝",
+    "Our Forever Promises",
+    "I Love You 💕"
+  ];
+  
+  setInterval(() => {
+    document.title = romanticTitles[titleChangeCount % romanticTitles.length];
+    titleChangeCount++;
+  }, 3000);
+};
 </script>
-
 </body>
 </html>
